@@ -112,10 +112,14 @@ function _update!(learner::MACLearner, t::CircularArraySARTTrajectory)
             next_state_values = AC.critic(next_state_flattened)
             target_action_values =
                 vec(rewards_flattened) .+
-                γ * vec(Zygote.dropgrad(sum(
-                    next_state_values .* softmax(AC.actor(next_state_flattened)),
-                    dims = 1,
-                )))
+                γ * vec(
+                    Zygote.dropgrad(
+                        sum(
+                            next_state_values .* softmax(AC.actor(next_state_flattened)),
+                            dims = 1,
+                        ),
+                    ),
+                )
             critic_loss =
                 mean((vec(target_action_values) .- vec(action_values[actions])) .^ 2)
         end

@@ -164,13 +164,13 @@ end
 function (agent::Agent{<:PPOPolicy})(env::AbstractEnv)
     dist = prob(agent.policy, env)
     a = rand(agent.policy.rng, dist)
-    EnrichedAction(a; action_log_prob=logpdf(dist, a))
+    EnrichedAction(a; action_log_prob = logpdf(dist, a))
 end
 
 function (agent::Agent{<:PPOPolicy})(env::MultiThreadEnv)
     dist = prob(agent.policy, env)
     action = rand.(agent.policy.rng, dist)
-    EnrichedAction(action; action_log_prob=logpdf.(dist, action))
+    EnrichedAction(action; action_log_prob = logpdf.(dist, action))
 end
 
 function (agent::Agent{<:RandomStartPolicy{<:PPOPolicy}})(env::AbstractEnv)
@@ -178,11 +178,11 @@ function (agent::Agent{<:RandomStartPolicy{<:PPOPolicy}})(env::AbstractEnv)
     if a isa EnrichedAction
         a
     else
-        EnrichedAction(a; action_log_prob=logpdf(prob(agent.policy, a)))
+        EnrichedAction(a; action_log_prob = logpdf(prob(agent.policy, a)))
     end
 end
 
-function RLBase.update!(p::PPOPolicy, t::Union{PPOTrajectory, MaskedPPOTrajectory})
+function RLBase.update!(p::PPOPolicy, t::Union{PPOTrajectory,MaskedPPOTrajectory})
     length(t) == 0 && return  # in the first update, only state & action is inserted into trajectory
     p.update_step += 1
     if p.update_step % p.update_freq == 0
@@ -292,7 +292,7 @@ function RLBase.update!(
     policy::Union{PPOPolicy,RandomStartPolicy{<:PPOPolicy}},
     env::MultiThreadEnv,
     ::PreActStage,
-    action::EnrichedAction
+    action::EnrichedAction,
 )
     push!(
         trajectory;

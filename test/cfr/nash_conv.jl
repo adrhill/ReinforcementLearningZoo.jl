@@ -7,7 +7,7 @@
     p = get_optimal_kuhn_policy()
     @test RLZoo.nash_conv(p, env) == 0.0
 
-    env = OpenSpielEnv( "leduc_poker")
+    env = OpenSpielEnv("leduc_poker")
     p = TabularRandomPolicy()
     @test RLZoo.nash_conv(p, env) ≈ 4.747222222222222
 

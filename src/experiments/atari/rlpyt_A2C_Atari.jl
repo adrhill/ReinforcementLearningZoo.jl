@@ -95,15 +95,15 @@ function RLCore.Experiment(
         DoEveryNStep() do t, agent, env
             with_logger(lg) do
                 rewards = [
-                    total_batch_reward_per_episode.rewards[i][end]
-                    for i in 1:length(env) if is_terminated(env[i])
+                    total_batch_reward_per_episode.rewards[i][end] for
+                    i in 1:length(env) if is_terminated(env[i])
                 ]
                 if length(rewards) > 0
                     @info "training" rewards = mean(rewards) log_step_increment = 0
                 end
                 steps = [
-                    batch_steps_per_episode.steps[i][end]
-                    for i in 1:length(env) if is_terminated(env[i])
+                    batch_steps_per_episode.steps[i][end] for
+                    i in 1:length(env) if is_terminated(env[i])
                 ]
                 if length(steps) > 0
                     @info "training" steps = mean(steps) log_step_increment = 0

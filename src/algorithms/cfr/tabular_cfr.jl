@@ -9,12 +9,7 @@ end
 
 function InfoStateNode(mask)
     n = sum(mask)
-    InfoStateNode(
-        fill(1 / n, n),
-        zeros(n),
-        zeros(n),
-        mask
-    )
+    InfoStateNode(fill(1 / n, n), zeros(n), zeros(n), mask)
 end
 
 #####
